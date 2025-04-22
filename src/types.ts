@@ -1,5 +1,3 @@
-import { z } from 'zod';
-
 export interface ValidationError {
   lineNumber: number;
   ruleDescription: string;
@@ -18,9 +16,4 @@ export interface ValidationResult {
 export interface ToolParams {
   content: string;
   config?: Record<string, any>;
-}
-
-export const toolParamsSchema = {
-  content: z.string(),
-  config: z.record(z.any()).optional()
-}; 
+} 

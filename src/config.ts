@@ -1,10 +1,13 @@
 // Default configuration based on markdownlint.md rules
 export const defaultConfig = {
+  'default': true,
   'MD001': true, // Heading levels should only increment by one level at a time
-  'MD003': { style: 'consistent' }, // Heading style
-  'MD004': { style: 'consistent' }, // Unordered list style
+  'MD002': true, // First heading should be a top level heading
+  'MD003': true, // Heading style
+  'MD004': true, // Unordered list style
   'MD005': true, // Inconsistent indentation for list items at the same level
-  'MD007': { indent: 2 }, // Unordered list indentation
+  'MD006': true, // Consider starting bulleted lists at the beginning of the line
+  'MD007': true, // Unordered list indentation
   'MD009': true, // Trailing spaces
   'MD010': true, // Hard tabs
   'MD011': true, // Reversed link syntax
@@ -34,10 +37,10 @@ export const defaultConfig = {
   'MD038': true, // Spaces inside code span elements
   'MD039': true, // Spaces inside link text
   'MD040': true, // Fenced code blocks should have a language specified
-  'MD041': true, // First line should be a top level heading
+  'MD041': true, // First line in file should be a top level heading
   'MD042': true, // No empty links
   'MD043': true, // Required heading structure
-  'MD044': true, // Proper names should have proper capitalization
+  'MD044': true, // Proper names should have the correct capitalization
   'MD045': true, // Images should have alternate text (alt text)
   'MD046': true, // Code block style
   'MD047': true, // Files should end with a single newline character

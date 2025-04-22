@@ -1,37 +1,73 @@
-import * as markdownlint from 'markdownlint';
+import markdownlint from 'markdownlint';
 import { defaultConfig } from './config.js';
-import { ToolParams, ValidationResult } from './types.js';
+import type { ValidationResult, ToolParams } from './types.js';
 
 export async function validateMarkdown(params: ToolParams): Promise<ValidationResult> {
   try {
-    const { content, config = {} } = params;
+    const { content, config } = params;
     
-    // Merge user config with default config
-    const mergedConfig = { ...defaultConfig, ...config };
-    
-    const options: markdownlint.Options = {
-      strings: { content },
-      config: mergedConfig
+    if (!content) {
+      return {
+        isValid: false,
+        error: 'Content is required'
+      };
+    }
+
+    if (typeof content !== 'string') {
+      return {
+        isValid: false,
+        error: 'Content must be a string'
+      };
+    }
+
+    const options = {
+      strings: {
+        content: content
+      },
+      config: {
+        ...defaultConfig,
+        ...config
+      }
     };
 
-    const result = await markdownlint.promises.markdownlint(options);
-    const errors = result['content'] || [];
+    const results = await new Promise<markdownlint.LintResults>((resolve, reject) => {
+      markdownlint(options, (err, result) => {
+        if (err) {
+          reject(err);
+        } else if (!result) {
+          reject(new Error('No result returned from markdownlint'));
+        } else {
+          resolve(result);
+        }
+      });
+    });
+    
+    // Get the results for our content
+    const lintErrors = results['content'] || [];
+    
+    if (lintErrors.length === 0) {
+      return {
+        isValid: true
+      };
+    }
+
+    const errors = lintErrors.map((error: markdownlint.LintError) => ({
+      lineNumber: error.lineNumber,
+      ruleDescription: error.ruleDescription,
+      ruleInformation: error.ruleInformation,
+      errorDetail: error.errorDetail,
+      errorContext: error.errorContext,
+      errorRange: error.errorRange ? [error.errorRange[0], error.errorRange[1]] as [number, number] : [0, 0] as [number, number]
+    }));
 
     return {
-      isValid: errors.length === 0,
-      errors: errors.map(error => ({
-        lineNumber: error.lineNumber,
-        ruleDescription: error.ruleDescription,
-        ruleInformation: error.ruleInformation,
-        errorDetail: error.errorDetail,
-        errorContext: error.errorContext,
-        errorRange: error.errorRange as [number, number]
-      }))
+      isValid: false,
+      errors
     };
   } catch (error) {
     return {
       isValid: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error occurred'
     };
   }
 } 

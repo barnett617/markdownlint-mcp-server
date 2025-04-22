@@ -1,8 +1,6 @@
 // Default configuration based on markdownlint.md rules
 export const defaultConfig = {
-  'default': true,
   'MD001': true, // Heading levels should only increment by one level at a time
-  'MD002': true, // First heading should be a top level heading
   'MD003': true, // Heading style
   'MD004': true, // Unordered list style
   'MD005': true, // Inconsistent indentation for list items at the same level
@@ -12,7 +10,7 @@ export const defaultConfig = {
   'MD010': true, // Hard tabs
   'MD011': true, // Reversed link syntax
   'MD012': true, // Multiple consecutive blank lines
-  'MD013': true, // Line length
+  'MD013': false, // Line length
   'MD014': true, // Dollar signs used before commands without showing output
   'MD018': true, // No space after hash on atx style heading
   'MD019': true, // Multiple spaces after hash on atx style heading

@@ -1,0 +1,52 @@
+{
+  "name": "markdownlint-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server implementation for markdownlint that validates markdown content against markdownlint rules",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "markdownlint-mcp-server": "./dist/bin.js"
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "markdownlint",
+    "markdown",
+    "linting",
+    "ai",
+    "llm",
+    "agent"
+  ],
+  "author": "Wilson <scorpioaoe@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barnett617/markdownlint-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/barnett617/markdownlint-mcp-server/issues"
+  },
+  "homepage": "https://github.com/barnett617/markdownlint-mcp-server#README",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.10.1",
+    "markdownlint": "^0.30.0",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "typescript": "^5.3.3"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
